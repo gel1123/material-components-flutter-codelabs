@@ -13,11 +13,73 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import 'model/products_repository.dart';
+import 'model/product.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  // TODO: Make a collection of cards (102)
+  // DONE: Make a collection of cards (102)
+  List<Card> _buildGridCards(BuildContext context) {
+    List<Product> products = ProductsRepository.loadProducts(Category.all);
+    if (products.isEmpty) {
+      return <Card>[];
+    }
+    final ThemeData theme = Theme.of(context);
+
+    // ロケールをもとに通貨フォーマッタを作成
+    String locale = Localizations.localeOf(context).toString();
+    print("locale: " + locale);
+    NumberFormat formatter = NumberFormat.simpleCurrency(
+      locale: locale,
+    );
+    return products.map((product) {
+      return Card(
+        clipBehavior: Clip.antiAlias,
+        // TODO: Adjust card heights (103)
+        child: Column(
+          // TODO: Center items on the card (103)
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            AspectRatio(
+              aspectRatio: 18.0 / 11.0,
+              child: Image.asset(
+                product.assetName,
+                package: product.assetPackage,
+                fit: BoxFit.fitWidth, // Imageの大きさを親要素横幅に合わせる
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+              child: Column(
+                // TODO: Align labels to the bottom and center (103)
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // TODO: Change innermost Column (103)
+                children: <Widget>[
+                  // TODO: Handle overflowing labels (103)
+                  Text(
+                    product.name,
+                    style: theme.textTheme.headline6,
+                    maxLines: 1,
+                  ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    formatter.format(product.price),
+                    style: theme.textTheme.subtitle2,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+    }).toList();
+  }
+
   // TODO: Add a variable for Category (104)
   @override
   Widget build(BuildContext context) {
@@ -57,33 +119,7 @@ class HomePage extends StatelessWidget {
         crossAxisCount: 2, // 1行に何個のカードを含めるか
         padding: const EdgeInsets.all(8.0),
         childAspectRatio: 8.0 / 9.0, // カードの横幅/縦幅（アスペクト比）
-        children: <Widget>[
-          Card(
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                AspectRatio(
-                  aspectRatio: 18.0 / 11.0,
-                  child: Image.asset('assets/diamond.png'),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const <Widget>[
-                      Text("title"),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Text("Secondary text."),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+        children: _buildGridCards(context),
       ),
       // DONE: Set resizeToAvoidBottomInset (101)
       resizeToAvoidBottomInset:
