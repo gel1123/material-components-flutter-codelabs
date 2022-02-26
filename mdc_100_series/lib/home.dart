@@ -17,6 +17,7 @@ import 'package:intl/intl.dart';
 
 import 'model/products_repository.dart';
 import 'model/product.dart';
+import 'supplemental/asymmetric_view.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -87,47 +88,10 @@ class HomePage extends StatelessWidget {
   // TODO: Add a variable for Category (104)
   @override
   Widget build(BuildContext context) {
-    // TODO: Return an AsymmetricView (104)
+    // TODO: DONE an AsymmetricView (104)
     // TODO: Pass Category variable to AsymmetricView (104)
-    return Scaffold(
-      // DONE: Add app bar (102)
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            semanticLabel: "メニュー",
-          ),
-          onPressed: () {
-            print("Menu Button");
-          },
-        ),
-        title: const Text("聖廟"),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                print("Search Button");
-              },
-              icon: const Icon(Icons.search, semanticLabel: "検索")),
-          IconButton(
-              onPressed: () {
-                print("Filter Button");
-              },
-              icon: const Icon(
-                Icons.tune,
-                semanticLabel: "フィルター",
-              ))
-        ],
-      ),
-      // DONE: Add a grid view (102)
-      body: GridView.count(
-        crossAxisCount: 2, // 1行に何個のカードを含めるか
-        padding: const EdgeInsets.all(8.0),
-        childAspectRatio: 8.0 / 9.0, // カードの横幅/縦幅（アスペクト比）
-        children: _buildGridCards(context),
-      ),
-      // DONE: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset:
-          false, // キーボードの外観がホームページまたはそのウィジェットのサイズを変更しないようにする
-    );
+    return AsymmetricView(products: ProductsRepository.loadProducts(
+        Category.all
+    ));
   }
 }
