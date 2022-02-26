@@ -113,7 +113,11 @@ class _LoginPageState extends State<LoginPage> {
                       // DONE: Show the next page (101)
                       Navigator.pop(context);
                     },
-                    child: const Text("次へ")),
+                    child: const Text("次へ"),
+                    style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(8.0),
+                    ),
+                ),
               ],
             )
           ],
