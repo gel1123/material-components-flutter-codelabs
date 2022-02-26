@@ -56,8 +56,25 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: "パスワード",
               ),
               obscureText: true, // アスタリスクで入力した文字を隠蔽
-           ),
-            // TODO: Add button bar (101)
+            ),
+            // DONE: Add button bar (101)
+            ButtonBar(
+              // TODO: Add a beveled rectangular border to CANCEL (103)
+              children: <Widget>[
+                TextButton(
+                    onPressed: () {
+                      // TODO: Clear the text fields (101)
+                    },
+                    child: const Text("キャンセル")),
+                // TODO: Add an elevation to NEXT (103)
+                // TODO: Add a beveled rectangular border to NEXT (103)
+                ElevatedButton(
+                    onPressed: () {
+                      // TODO: Show the next page (101)
+                    },
+                    child: const Text("次へ")),
+              ],
+            )
           ],
         ),
       ),
