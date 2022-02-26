@@ -76,7 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                 // TODO: Add a beveled rectangular border to NEXT (103)
                 ElevatedButton(
                     onPressed: () {
-                      // TODO: Show the next page (101)
+                      // DONE: Show the next page (101)
+                      Navigator.pop(context);
                     },
                     child: const Text("次へ")),
               ],
