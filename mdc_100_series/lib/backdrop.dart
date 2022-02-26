@@ -38,7 +38,9 @@ class _BackdropState extends State<Backdrop>
       children: <Widget>[
         // TODO: Wrap backLayer in an ExcludeSemantics widget (104)
         widget.backLayer,
-        widget.frontLayer,
+        // TODO: Add a PositionedTransition (104)
+        // TODO: Wrap front layer in _FrontLayer (104)
+        _FrontLayer(child: widget.frontLayer),
       ],
     );
   }
@@ -52,8 +54,8 @@ class _BackdropState extends State<Backdrop>
       // TODO: Replace leading menu icon with IconButton (104)
       // TODO: Remove leading property (104)
       // TODO: Create title with _BackdropTitle parameter (104)
-      leading: Icon(Icons.menu),
-      title: Text("聖廟"),
+      leading: const Icon(Icons.menu),
+      title: const Text("聖廟"),
       actions: <Widget>[
         // TODO: Add shortcut to login screen from trailing icons (104)
         IconButton(
@@ -76,6 +78,28 @@ class _BackdropState extends State<Backdrop>
       appBar: appBar,
       // TODO: Return a LayoutBuilder widget (104)
       body: _buildStack(),
+    );
+  }
+}
+
+// DONE: Add _FrontLayer class (104)
+class _FrontLayer extends StatelessWidget {
+  const _FrontLayer({Key? key, required this.child}) : super(key: key);
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      elevation: 16.0,
+      shape: const BeveledRectangleBorder(
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(46.0)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }
