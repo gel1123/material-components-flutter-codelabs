@@ -42,7 +42,21 @@ class _LoginPageState extends State<LoginPage> {
             // TODO: Wrap Username with AccentColorOverride (103)
             // TODO: Remove filled: true values (103)
             // TODO: Wrap Password with AccentColorOverride (103)
-            // TODO: Add TextField widgets (101)
+            // DONE: Add TextField widgets (101)
+            const TextField(
+              decoration: InputDecoration(
+                filled: true,
+                labelText: "ユーザ名",
+              ),
+            ),
+            const SizedBox(height: 12.0),
+            const TextField(
+              decoration: InputDecoration(
+                filled: true,
+                labelText: "パスワード",
+              ),
+              obscureText: true, // アスタリスクで入力した文字を隠蔽
+           ),
             // TODO: Add button bar (101)
           ],
         ),
