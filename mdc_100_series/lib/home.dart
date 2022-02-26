@@ -37,26 +37,57 @@ class HomePage extends StatelessWidget {
         ),
         title: const Text("聖廟"),
         actions: <Widget>[
-          IconButton(onPressed: () {
-            print("Search Button");
-          }, icon: const Icon(
-            Icons.search,
-            semanticLabel: "検索"
-          )),
-          IconButton(onPressed: () {
-            print("Filter Button");
-          }, icon: const Icon(
-            Icons.tune,
-            semanticLabel: "フィルター",
-          ))
+          IconButton(
+              onPressed: () {
+                print("Search Button");
+              },
+              icon: const Icon(Icons.search, semanticLabel: "検索")),
+          IconButton(
+              onPressed: () {
+                print("Filter Button");
+              },
+              icon: const Icon(
+                Icons.tune,
+                semanticLabel: "フィルター",
+              ))
         ],
       ),
-      // TODO: Add a grid view (102)
-      body: const Center(
-        child: Text('You did it!'),
+      // DONE: Add a grid view (102)
+      body: GridView.count(
+        crossAxisCount: 2, // 1行に何個のカードを含めるか
+        padding: const EdgeInsets.all(8.0),
+        childAspectRatio: 8.0 / 9.0, // カードの横幅/縦幅（アスペクト比）
+        children: <Widget>[
+          Card(
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                AspectRatio(
+                  aspectRatio: 18.0 / 11.0,
+                  child: Image.asset('assets/diamond.png'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const <Widget>[
+                      Text("title"),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Text("Secondary text."),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
       // DONE: Set resizeToAvoidBottomInset (101)
-      resizeToAvoidBottomInset: false, // キーボードの外観がホームページまたはそのウィジェットのサイズを変更しないようにする
+      resizeToAvoidBottomInset:
+          false, // キーボードの外観がホームページまたはそのウィジェットのサイズを変更しないようにする
     );
   }
 }
