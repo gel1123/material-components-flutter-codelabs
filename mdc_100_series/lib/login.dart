@@ -67,7 +67,9 @@ class _LoginPageState extends State<LoginPage> {
               children: <Widget>[
                 TextButton(
                     onPressed: () {
-                      // TODO: Clear the text fields (101)
+                      // DONE: Clear the text fields (101)
+                      _usernameController.clear();
+                      _passwordController.clear();
                     },
                     child: const Text("キャンセル")),
                 // TODO: Add an elevation to NEXT (103)
