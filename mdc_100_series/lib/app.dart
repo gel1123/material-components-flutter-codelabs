@@ -13,6 +13,7 @@
 // limitations under the License.
 
 import 'package:flutter/material.dart';
+import 'supplemental/cut_corners_border.dart';
 
 import 'home.dart';
 import 'login.dart';
@@ -72,7 +73,7 @@ ThemeData _buildShrineTheme() {
           color: kShrineBrown900,
         ),
       ),
-      border: OutlineInputBorder(),
+      border: CutCornersBorder(),
     )
   );
 }
