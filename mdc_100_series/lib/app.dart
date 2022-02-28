@@ -20,10 +20,24 @@ import 'home.dart';
 import 'login.dart';
 import 'colors.dart';
 import 'model/product.dart';
+import 'category_menu_page.dart';
 
-// TODO: Convert ShrineApp to stateful widget (104)
-class ShrineApp extends StatelessWidget {
+// DONE: Convert ShrineApp to stateful widget (104)
+class ShrineApp extends StatefulWidget {
   const ShrineApp({Key? key}) : super(key: key);
+
+  @override
+  State<ShrineApp> createState() => _ShrineAppState();
+}
+
+class _ShrineAppState extends State<ShrineApp> {
+  Category _currentCategory = Category.all;
+
+  void _onCategoryTap(Category category) {
+    setState(() {
+      _currentCategory = category;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +45,17 @@ class ShrineApp extends StatelessWidget {
       title: 'Shrine',
       // DONE: Change home: to a Backdrop with a HomePage frontLayer (104)
       home: Backdrop(
-        // TODO: Make currentCategory field take _currentCategory (104)
-        currentCategory: Category.all,
+        // DONE: Make currentCategory field take _currentCategory (104)
+        currentCategory: _currentCategory,
         // TODO: Pass _currentCategory for frontLayer (104)
-        frontLayer: HomePage(),
-        // TODO: Change backLayer field value to CategoryMenuPage (104)
-        backLayer: Container(color: kShrinePink100),
-        frontTitle: Text("聖廟"),
-        backTitle: Text("メニュー"),
+        frontLayer: HomePage(category: _currentCategory),
+        // DONE: Change backLayer field value to CategoryMenuPage (104)
+        backLayer: CategoryMenuPage(
+          currentCategory: _currentCategory,
+          onCategoryTap: _onCategoryTap,
+        ),
+        frontTitle: const Text("聖廟"),
+        backTitle: const Text("メニュー"),
       ),
       initialRoute: '/login',
       onGenerateRoute: _getRoute,
