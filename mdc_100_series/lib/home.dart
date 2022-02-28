@@ -22,17 +22,12 @@ import 'supplemental/asymmetric_view.dart';
 class HomePage extends StatelessWidget {
   final Category category;
 
-  const HomePage({
-    this.category = Category.all,
-    Key? key
-  }) : super(key: key);
+  const HomePage({this.category = Category.all, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: DONE an AsymmetricView (104)
     // DONE: Pass Category variable to AsymmetricView (104)
-    return AsymmetricView(products: ProductsRepository.loadProducts(
-        category
-    ));
+    return AsymmetricView(products: ProductsRepository.loadProducts(category));
   }
 }

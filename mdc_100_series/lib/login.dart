@@ -100,42 +100,42 @@ class _LoginPageState extends State<LoginPage> {
               // TODO: Add a beveled rectangular border to CANCEL (103)
               children: <Widget>[
                 TextButton(
-                    onPressed: () {
-                      // DONE: Clear the text fields (101)
-                      _usernameController.clear();
-                      _passwordController.clear();
-                    },
-                    child: const Text("キャンセル"),
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.secondary,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                        ),
+                  onPressed: () {
+                    // DONE: Clear the text fields (101)
+                    _usernameController.clear();
+                    _passwordController.clear();
+                  },
+                  child: const Text("キャンセル"),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.secondary,
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7.0)),
                       ),
                     ),
+                  ),
                 ),
                 // TODO: Add an elevation to NEXT (103)
                 // TODO: Add a beveled rectangular border to NEXT (103)
                 ElevatedButton(
-                    onPressed: () {
-                      // DONE: Show the next page (101)
-                      Navigator.pop(context);
-                    },
-                    child: const Text("次へ"),
-                    style: ButtonStyle(
-                      elevation: MaterialStateProperty.all(8.0),
-                      foregroundColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.secondary,
-                      ),
-                      shape: MaterialStateProperty.all(
-                        const BeveledRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(7.0)),
-                        ),
+                  onPressed: () {
+                    // DONE: Show the next page (101)
+                    Navigator.pop(context);
+                  },
+                  child: const Text("次へ"),
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(8.0),
+                    foregroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.secondary,
+                    ),
+                    shape: MaterialStateProperty.all(
+                      const BeveledRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(7.0)),
                       ),
                     ),
+                  ),
                 ),
               ],
             )
