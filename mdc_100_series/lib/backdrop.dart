@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
+import 'package:shrine/login.dart';
 
 import 'model/product.dart';
 
@@ -98,7 +99,7 @@ class _BackdropState extends State<Backdrop>
             rect: layerAnimation,
             child: _FrontLayer(
                 // DONE: Implement onTap property on _BackdropState (104)
-              onTap: _toggleBackdropLayerVisibility,
+                onTap: _toggleBackdropLayerVisibility,
                 child: widget.frontLayer)),
       ],
     );
@@ -111,27 +112,40 @@ class _BackdropState extends State<Backdrop>
       elevation: 0.0,
       titleSpacing: 0.0,
       // DONE: Replace leading menu icon with IconButton (104)
-      leading: IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: _toggleBackdropLayerVisibility,
+      // DONE: Remove leading property (104)
+      // DONE: Create title with _BackdropTitle parameter (104)
+      title: _BackdropTitle(
+        listenable: _controller.view,
+        onPress: _toggleBackdropLayerVisibility,
+        frontTitle: widget.frontTitle,
+        backTitle: widget.backTitle,
       ),
-      // TODO: Remove leading property (104)
-      // TODO: Create title with _BackdropTitle parameter (104)
-      title: const Text("聖廟"),
       actions: <Widget>[
-        // TODO: Add shortcut to login screen from trailing icons (104)
+        // DONE: Add shortcut to login screen from trailing icons (104)
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => const LoginPage()),
+            );
+          },
           icon: const Icon(
             Icons.search,
-            semanticLabel: "検索",
+            semanticLabel: "login",
           ),
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => const LoginPage()),
+              );
+            },
             icon: const Icon(
               Icons.tune,
-              semanticLabel: "フィルタ",
+              semanticLabel: "login",
             )),
       ],
       backwardsCompatibility: false,
@@ -146,11 +160,8 @@ class _BackdropState extends State<Backdrop>
 
 // DONE: Add _FrontLayer class (104)
 class _FrontLayer extends StatelessWidget {
-  const _FrontLayer({
-    Key? key,
-    this.onTap,
-    required this.child
-  }) : super(key: key);
+  const _FrontLayer({Key? key, this.onTap, required this.child})
+      : super(key: key);
 
   final Widget child;
   final VoidCallback? onTap;
@@ -177,5 +188,92 @@ class _FrontLayer extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class _BackdropTitle extends AnimatedWidget {
+  final void Function() onPress;
+  final Widget frontTitle;
+  final Widget backTitle;
+
+  const _BackdropTitle({
+    Key? key,
+    required Animation<double> listenable,
+    required this.onPress,
+    required this.frontTitle,
+    required this.backTitle,
+  })  : _listenable = listenable,
+        super(key: key, listenable: listenable);
+
+  final Animation<double> _listenable;
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = _listenable;
+
+    return DefaultTextStyle(
+        style: Theme.of(context).textTheme.headline6!,
+        softWrap: false,
+        overflow: TextOverflow.ellipsis,
+        child: Row(
+          children: <Widget>[
+            // branded icon
+            SizedBox(
+              width: 72.0,
+              child: IconButton(
+                padding: const EdgeInsets.only(right: 8.0),
+                onPressed: onPress,
+                icon: Stack(
+                  children: <Widget>[
+                    Opacity(
+                      opacity: animation.value,
+                      child: const ImageIcon(
+                          AssetImage("assets/slanted_menu.png")),
+                    ),
+                    FractionalTranslation(
+                      translation: Tween<Offset>(
+                        begin: Offset.zero,
+                        end: const Offset(1.0, 0.0),
+                      ).evaluate(animation),
+                      child: const ImageIcon(AssetImage("assets/diamond.png")),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // Here, we do a custome cross fade between backTitle and frontTitle.
+            // This makes a smooth animation between the two texts.
+            Stack(
+              children: <Widget>[
+                Opacity(
+                  opacity: CurvedAnimation(
+                    parent: ReverseAnimation(animation),
+                    curve: const Interval(0.5, 1.0),
+                  ).value,
+                  child: FractionalTranslation(
+                    translation: Tween<Offset>(
+                      begin: Offset.zero,
+                      end: const Offset(0.5, 0.0),
+                    ).evaluate(animation),
+                    child: backTitle,
+                  ),
+                ),
+                Opacity(
+                  opacity: CurvedAnimation(
+                    parent: animation,
+                    curve: const Interval(0.5, 1.0),
+                  ).value,
+                  child: FractionalTranslation(
+                    translation: Tween<Offset>(
+                      begin: const Offset(-0.25, 0.0),
+                      end: Offset.zero,
+                    ).evaluate(animation),
+                    child: frontTitle,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }
